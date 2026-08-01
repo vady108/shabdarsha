@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shabdarsha — a word for the day</title>
+  <meta name="description" content="A daily motivational quote. One word, well chosen, to carry the day." />
+  <meta name="theme-color" content="#16161c" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #f5f4f0;
+      --ink: #1a1a20;
+      --ink-soft: #55555f;
+      --ink-faint: #8a8a95;
+      --rule: #e2e0d9;
+      --accent: #2f5d50;        /* deep pine — the single accent */
+      --card: #fbfaf7;
+      --shadow: 0 1px 2px rgba(20,20,30,.04), 0 18px 44px -26px rgba(20,20,30,.22);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #141419;
+        --ink: #ecebe6;
+        --ink-soft: #a6a6b0;
+        --ink-faint: #6d6d78;
+        --rule: #2a2a33;
+        --accent: #7fd1bb;
+        --card: #1b1b22;
+        --shadow: 0 1px 2px rgba(0,0,0,.3), 0 24px 60px -30px rgba(0,0,0,.7);
+      }
+    }
+    :root[data-theme="light"] {
+      --paper: #f5f4f0; --ink: #1a1a20; --ink-soft: #55555f; --ink-faint: #8a8a95;
+      --rule: #e2e0d9; --accent: #2f5d50; --card: #fbfaf7;
+      --shadow: 0 1px 2px rgba(20,20,30,.04), 0 18px 44px -26px rgba(20,20,30,.22);
+    }
+    :root[data-theme="dark"] {
+      --paper: #141419; --ink: #ecebe6; --ink-soft: #a6a6b0; --ink-faint: #6d6d78;
+      --rule: #2a2a33; --accent: #7fd1bb; --card: #1b1b22;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 24px 60px -30px rgba(0,0,0,.7);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.6rem clamp(1.25rem, 5vw, 3rem);
+    }
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: .6rem;
+      font-family: "Fraunces", serif;
+      font-weight: 500;
+      font-size: 1.35rem;
+      letter-spacing: -.01em;
+    }
+    .brand .dot { color: var(--accent); }
+    .brand small {
+      font-family: "Inter", sans-serif;
+      font-weight: 500;
+      font-size: .66rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--rule);
+      color: var(--ink-soft);
+      width: 2.2rem; height: 2.2rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 1rem;
+      display: grid; place-items: center;
+      transition: border-color .2s, color .2s;
+    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem clamp(1.25rem, 5vw, 3rem) 3rem;
+      text-align: center;
+    }
+    .eyebrow {
+      font-size: .7rem;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 1.6rem;
+    }
+    .stage { max-width: 46rem; }
+    figure { margin: 0; }
+    .mark {
+      font-family: "Fraunces", serif;
+      font-size: clamp(4rem, 12vw, 7rem);
+      line-height: .5;
+      color: var(--rule);
+      display: block;
+      height: .5em;
+      user-select: none;
+    }
+    blockquote {
+      margin: 0;
+      font-family: "Fraunces", serif;
+      font-weight: 400;
+      font-size: clamp(1.7rem, 5.2vw, 3.1rem);
+      line-height: 1.24;
+      letter-spacing: -.015em;
+      text-wrap: balance;
+      transition: opacity .35s ease, transform .35s ease;
+    }
+    figcaption {
+      margin-top: 1.7rem;
+      font-size: .95rem;
+      color: var(--ink-soft);
+      letter-spacing: .01em;
+      transition: opacity .35s ease;
+    }
+    figcaption .rule {
+      display: inline-block;
+      width: 1.6rem; height: 1px;
+      background: var(--accent);
+      vertical-align: middle;
+      margin-right: .7rem;
+    }
+    figcaption b { font-weight: 600; color: var(--ink); }
+
+    .quote-fade { opacity: 0; transform: translateY(6px); }
+
+    .actions {
+      display: flex;
+      gap: .7rem;
+      margin-top: 2.6rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    button.act {
+      font-family: "Inter", sans-serif;
+      font-size: .9rem;
+      font-weight: 500;
+      padding: .7rem 1.3rem;
+      border-radius: 999px;
+      cursor: pointer;
+      border: 1px solid var(--rule);
+      background: var(--card);
+      color: var(--ink);
+      box-shadow: var(--shadow);
+      transition: transform .12s ease, border-color .2s, color .2s;
+    }
+    button.act:hover { transform: translateY(-1px); border-color: var(--accent); }
+    button.act:active { transform: translateY(0); }
+    /* Primary button text must contrast the accent: light text on the dark pine
+       accent (light theme), dark text on the mint accent (dark theme). */
+    button.act.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #f7f7f4;
+    }
+    @media (prefers-color-scheme: dark) { button.act.primary { color: #10231d; } }
+    :root[data-theme="dark"] button.act.primary { color: #10231d; }
+    :root[data-theme="light"] button.act.primary { color: #f7f7f4; }
+    .copied { color: var(--accent) !important; border-color: var(--accent) !important; }
+
+    footer {
+      text-align: center;
+      padding: 1.4rem;
+      border-top: 1px solid var(--rule);
+      color: var(--ink-faint);
+      font-size: .78rem;
+      letter-spacing: .02em;
+    }
+    footer b { color: var(--ink-soft); font-weight: 500; }
+
+    @media (prefers-reduced-motion: reduce) {
+      blockquote, figcaption { transition: none; }
+      .quote-fade { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      शब्द<span class="dot">·</span><span>darsha</span>
+      <small>a word for the day</small>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme" title="Toggle theme">◐</button>
+  </header>
+
+  <main>
+    <div class="stage">
+      <p class="eyebrow" id="eyebrow">Quote of the day</p>
+      <figure>
+        <span class="mark" aria-hidden="true">&ldquo;</span>
+        <blockquote id="quote">Loading&hellip;</blockquote>
+        <figcaption id="author"><span class="rule"></span><b>&nbsp;</b></figcaption>
+      </figure>
+      <div class="actions">
+        <button class="act primary" id="newBtn">New quote</button>
+        <button class="act" id="copyBtn">Copy</button>
+        <button class="act" id="todayBtn">Today&rsquo;s quote</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <b>shabdarsha</b> — a small daily ritual. New words added often.
+  </footer>
+
+  <script src="quotes.js"></script>
+  <script>
+    (function () {
+      var quotes = window.QUOTES || [];
+      var qEl = document.getElementById("quote");
+      var aEl = document.getElementById("author");
+      var eyebrow = document.getElementById("eyebrow");
+      var root = document.documentElement;
+      var current = 0;
+
+      // Deterministic "quote of the day": same quote for everyone on a given date,
+      // rotates daily. Seeded from the day-of-year so it feels intentional, not random.
+      function quoteOfTheDay() {
+        var now = new Date();
+        var start = new Date(now.getFullYear(), 0, 0);
+        var day = Math.floor((now - start) / 86400000);
+        return day % quotes.length;
+      }
+
+      function render(i, isDaily) {
+        var q = quotes[i];
+        current = i;
+        eyebrow.textContent = isDaily ? "Quote of the day" : "A word at random";
+        qEl.classList.add("quote-fade");
+        aEl.classList.add("quote-fade");
+        setTimeout(function () {
+          qEl.textContent = q.text;
+          aEl.innerHTML = '<span class="rule"></span><b>' + q.author + "</b>";
+          qEl.classList.remove("quote-fade");
+          aEl.classList.remove("quote-fade");
+        }, 180);
+      }
+
+      function randomQuote() {
+        if (quotes.length < 2) return render(0, false);
+        var i;
+        do { i = Math.floor(Math.random() * quotes.length); } while (i === current);
+        render(i, false);
+      }
+
+      document.getElementById("newBtn").addEventListener("click", randomQuote);
+      document.getElementById("todayBtn").addEventListener("click", function () {
+        render(quoteOfTheDay(), true);
+      });
+      document.getElementById("copyBtn").addEventListener("click", function () {
+        var q = quotes[current];
+        var text = "“" + q.text + "” — " + q.author;
+        var btn = this;
+        navigator.clipboard.writeText(text).then(function () {
+          btn.textContent = "Copied";
+          btn.classList.add("copied");
+          setTimeout(function () { btn.textContent = "Copy"; btn.classList.remove("copied"); }, 1400);
+        }).catch(function () {});
+      });
+
+      // Theme toggle (persists; overrides the OS default when set).
+      var saved = null;
+      try { saved = localStorage.getItem("shabdarsha-theme"); } catch (e) {}
+      if (saved) root.setAttribute("data-theme", saved);
+      document.getElementById("themeToggle").addEventListener("click", function () {
+        var isDark = matchMedia("(prefers-color-scheme: dark)").matches;
+        var currentTheme = root.getAttribute("data-theme") || (isDark ? "dark" : "light");
+        var next = currentTheme === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        try { localStorage.setItem("shabdarsha-theme", next); } catch (e) {}
+      });
+
+      render(quoteOfTheDay(), true);
+    })();
+  </script>
+</body>
+</html>
